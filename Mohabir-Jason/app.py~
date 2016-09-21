@@ -6,7 +6,7 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
-coll = ["Genesis", "Exodus"]
+coll = [1,3,5,7]
 
 @app.route("/")
 def hello_world():
