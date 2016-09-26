@@ -1,0 +1,28 @@
+<!--
+Jason Mohabir
+SoftDev1 pd8
+HW03 -- ...and Now Enjoy its Contents
+2016-09-23
+-->
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Occupations</title>
+  </head>
+  <body>
+    <h1>This website will choose a random occupation for you, based on the percentage of people in each occupation.</h1>
+    <table border="1">
+      {%- for row in occList %}
+      <tr>
+	{%- for item in row %}
+	<td>{{item}}</td>
+	{%- endfor %}
+      </tr>
+      {%- endfor %}
+    </table>
+    <h2>Random occupation chosen (reload to try again!):</h2>
+    {{occupation}}
+  </body>
+</html>

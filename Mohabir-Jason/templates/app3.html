@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title> {{ title }} </title>
+  </head>
+
+  <body>
+    <h1> {{ title }} </h1> 
+    <p> This website will choose a random occupation for you, based on the percentage of people in each occupation. </p>
+    <hr>
+    
+    <table>
+      <tr>
+	<th> Occupations </th>
+	<th> Percentage of Populace </th>
+      </tr> 
+      {% for key,value in data.iteritems() %}
+      <tr>
+        <td> {{ key }} </td>
+	<td> {{ value }} </td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+    <p style="text-align:center"> Your occupation is: </p>
+    <p style="text-align:center;font-weight:bold"> {{ occupation }} </p>
+
+  </body>
+  
+</html>

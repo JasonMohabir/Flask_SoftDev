@@ -11,8 +11,10 @@
 <body>
 Here be the body!
 <br>
-{%- for item in fool %}
+
+{%- for key, value in _dict.iteritems() %}
 {{ item }}
+{{ value }}
 
 <br>
 

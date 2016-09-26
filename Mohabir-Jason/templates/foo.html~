@@ -10,6 +10,7 @@
 
 <body>
 Here be the body!
+<br>
 {%- for item in fool %}
 {{ item }}
 
