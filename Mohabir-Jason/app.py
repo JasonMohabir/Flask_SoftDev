@@ -8,7 +8,7 @@ import random
 
 app = Flask(__name__)
 
-occL = open("occupations.csv").read();
+occL = open("static/occupations.csv").read();
 occL = occL.split('\n')
 lineZero = occL[0]
 del occL[0]

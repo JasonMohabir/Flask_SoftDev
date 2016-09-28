@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Occupations</title>
+
+        <body>
+      <center>
+	<h1> Job? </h1>
+	<i>Click on an occupation to be redirected to a link helpful for the field</i>
+	<br><br>
+	<table>
+	    <tr>
+	          <th><b>Occupations</b></th>
+		      <td><b>Percentage</b></td>
+		        </tr>
+	      {% for occ in dic %}
+	      <tr>
+		    <th><a href="{{dic.get(occ)[1]}}"> {{occ}} </a> </th>
+		        <td> {{dic.get(occ)[0]}} </td>
+			  </tr>
+	        {% endfor %}
+	      </table>
+	<br>
+	Random Weighted Occupation: {{random_job}}
+      </center>
+    </body>
+    
+  </head>
+</html>
