@@ -18,7 +18,7 @@ def disp_loginpage():
     return render_template( 'login.html' )
 
 
-@app.route("/auth")
+@app.route("/auth", methods=['POST'])
 def authenticate():
     print "\n\n\n"
     print "***DIAG: this Flask obj ***"
