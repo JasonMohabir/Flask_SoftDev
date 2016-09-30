@@ -1,3 +1,10 @@
+<!-- 
+Jason Mohabir
+SoftDev1 pd8
+HW04 -- Into a Zone of Danger
+2016-09-29
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +15,8 @@
   <body>
     <form action="/auth" method="POST">
       <input type="text" name="username">
-      <input type="submit" name="sub1">
+      <input type="text" name="password">
+      <input type="submit">
     </form>
   </body>
 
