@@ -1,25 +1,30 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, session
 import hashlib
 import csv
 app = Flask(__name__)    #create Flask object
 
+
 @app.route("/")
+def index():
+    if session.has_key('username'):
+        return redirect(url_for("welcome"))
+    else:
+        return redirect(url_for("home")))
+
+
+
+
 @app.route("/login", methods=["POST"])
 def disp_loginpage():
-    print "\n\n\n\n"
-    print "::DIAG:: this flsk obj"
-    print app
-    print "::DIAG:: this request obj"
-    print request
-    print "::DIAG:: request.headers"
-    print request.headers
-    print "::DIAG:: request.method"
-    print request.method
-    print "::DIAG:: request.args"
-    print request.args 
-    print "::DIAG:: request.form"
-    print request.form
+    if (userinput in users):
+        if (users[userinput] == passHash):
+            session['username'] = userinput
+            return redirect(url_for("welcome"))
+        return render_template("auth.html", cond="Incorrect password.")
+    return render_template("auth.html", cond="Account not found.")
     return render_template("login.html")
+
+
 
 @app.route("/auth", methods=['POST'])
 def authenticate():
@@ -54,7 +59,6 @@ def authenticate():
                 hashPass = hashlib.sha1()
                 hashPass.update(inputtedPass)
                 if i[1] == hashPass.hexdigest():
-                    session["user"] = inputtedUser
                     return render_template("success.html", 
                                            title = "Welcome to the Promise Land",
                                            text = "You have logged in successfully. Welcome: " + inputtedUser)
@@ -62,17 +66,8 @@ def authenticate():
                     return render_template("fail.html",
                                            title = "Failed Login",
                                            text = "Your username or password were incorrect")
-
-@app.route("/jacabo")
-def js():
-    #redirect(url_for("js"))
-    return redirect("http://xkcd.com")
-
-
-
+    
 if __name__ == "__main__": #false if this file imported as module
     #enable debugging, auto-restarting of server when this file is modified
     app.debug = True 
     app.run()
-
-print "We are at the end"

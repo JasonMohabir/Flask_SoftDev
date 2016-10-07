@@ -1,0 +1,35 @@
+<html>
+
+  <head>
+    <title> REGISTER PAGE </title>
+  </head>
+
+  
+  <body>
+    <form action="/regauth" method="POST">
+      <center>
+	<font size="12"> Registration </font>
+	<br>
+	<br>
+	Desired Username: 
+	<input type="text" name="username">
+	<br>
+	<br>
+	Desired Password: 
+	<input type="password" name="password">
+	<br>
+	<br>
+	<input type="submit" value="Submit">
+	<br>
+	<br>
+	<b> {{ message }} </b>
+	<br>
+	<br>
+      </center>
+    </form>
+    <center>
+      <button onclick="location.href='/'"> Back to Home </button>
+    </center>
+  </body>
+
+</html>
