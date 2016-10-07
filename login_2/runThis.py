@@ -3,7 +3,7 @@ from utils import Helper
 import os
 import csv
 app = Flask(__name__)
-app.secret_key = "(wz0Ta%2"
+app.secret_key = "das sein"
 
 lmessage = ""
 rmessage = ""
