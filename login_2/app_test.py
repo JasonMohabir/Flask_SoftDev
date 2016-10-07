@@ -5,8 +5,8 @@ import csv
 app = Flask(__name__)
 app.secret_key = "secretKey"
 
-lmessage = ""
-rmessage = ""
+loginIssue = ""
+registerIssue = ""
 
 @app.route("/")
 def start():
@@ -32,26 +32,26 @@ def home():
 
 @app.route("/login")
 def login():
-    global lmessage
-    tempmessage = lmessage
-    lmessage = ""
+    global loginIssue
+    tempmessage = loginIssue
+    loginIssue = ""
     return render_template("Login.html", message = tempmessage)
 
 
 @app.route("/auth", methods=['POST','GET'])
 def authenticate():
-    global lmessage
+    global loginIssue
     username = request.form['username']
     password = request.form['password']
 
     mydict = Helper.CSVtoDict('static/data.csv')
         
     if username not in mydict.keys():
-        lmessage = "Sorry, username does not exist"
+        loginIssue = "Sorry, username does not exist"
         return redirect(url_for("login"))
     
     if not Helper.isMatch(mydict[username], password):
-        lmessage = "Incorrect password"
+        loginIssue = "Incorrect password"
         return redirect(url_for("login"))
 
     session['user'] = username
@@ -60,16 +60,16 @@ def authenticate():
 
 @app.route("/register")
 def register():
-    global rmessage
-    tempmessage = rmessage
-    rmessage = ""
+    global registerIssue
+    tempmessage = registerIssue
+    registerIssue = ""
     return render_template("Register.html", message = "")
 
 
 @app.route("/regauth", methods = ['POST','GET'])
 def regauthenticate():
-    global lmessage
-    global rmessage
+    global loginIssue
+    global registerIssue
     username = request.form['username']
     filepath = 'static/data.csv'
     
@@ -77,7 +77,7 @@ def regauthenticate():
         
     for key, value in mydict.items():
         if key == username:
-            rmessage = "Username already exists"
+            registerIssue = "Username already exists"
             return redirect(url_for("register"))
 
     Helper.addUser(filepath, username, request.form['password'])
