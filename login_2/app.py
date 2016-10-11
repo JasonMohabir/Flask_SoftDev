@@ -1,82 +1,85 @@
-from flask import Flask, render_template, request, session
-import hashlib
-import csv
-app = Flask(__name__)    #create Flask object
+from flask import Flask, render_template, request, redirect, url_for, session
+import hashlib, os
 
+app = Flask(__name__)
+app.secret_key = "thisisasecret"
 
 @app.route("/")
-def index():
-    if session.has_key('username'):
-        return redirect(url_for("welcome"))
-    else:
-        return redirect(url_for("home")))
+def mainPage():
+    return render_template("mainpage.html")
 
+@app.route("/login", methods=["POST"])
+def login():
+    return render_template("login.html",message="")
 
-@app.route("/welcome", methods=["POST"])
-def welcome():
-    if not session.has_key('user'):
-        return "You are not logged in!"
-    return render_template("success.html")
+@app.route("/authL", methods=["POST"])
+def authenticateL():
+    print app
+    print request
+    print request.form
+    print request.form["username"]
+    print request.form["password"]
+    print request.headers
+    f = open("data/accounts.csv","r")
+    username = request.form["username"]
+    password = request.form["password"]
+    h = hashlib.sha1()
+    h.update(password)
+    password = h.hexdigest()
+    for line in f:
+        pair = line.split(",")
+        pair[1] = pair[1].rstrip("\n")
+        if username == pair[0] and password == pair[1]:
+            f.close()
+            session["username"] = username
+            return render_template("success.html")
+        if username == pair[0] and password != pair[1]:
+            f.close()
+            return render_template("login.html",message="Wrong password!")
+        if username != pair[0] and password == pair[1]:
+            f.close()
+            return render_template("login.html",message="Wrong username!")
+        if session["username"] == username:
+            return render_template("login.html",message="Already logged in from another computer!")
+    f.close()
+    return render_template("login.html",message="Incorrect username and password!")
 
-@app.route("/logout")
+@app.route("/register", methods=["POST"])
+def register():
+    return render_template("register.html",message="")
+
+@app.route("/authR", methods=["POST"])
+def authenticateR():
+    print app
+    print request
+    print request.form
+    print request.form["username"]
+    print request.form["password"]
+    print request.headers
+    f = open("data/accounts.csv","r")
+    username = request.form["username"]
+    password = request.form["password"]
+    h = hashlib.sha1()
+    h.update(password)
+    password = h.hexdigest()
+    for line in f:
+        pair = line.split(",")
+        pair[1] = pair[1].rstrip("\n")
+        if username == pair[0]:
+            f.close()
+            return render_template("register.html",message="Username already taken!")
+    f.close()
+    f = open("data/accounts.csv","a")
+    f.write( username + "," + password + "\n" )
+    f.close()
+    #return redirect(url_for("login"))
+    return render_template("login.html",message="Account created!")
+
+@app.route("/logout", methods=["POST"])
 def logout():
-    session.clear()
-    return redirect(url_for("index"))
+    session.pop("username")
+    return render_template("login.html",message="Succesfully logged out.")
 
-@app.route("/auth", methods=["POST"])
-def disp_loginpage():
-    if (userinput in users):
-        if (users[userinput] == passHash):
-            session['username'] = userinput
-            return redirect(url_for("welcome"))
-        return render_template("auth.html", cond ="Incorrect password.")
-    return render_template("auth.html", cond ="Account not found.")
-    return render_template("login.html")
-
-
-
-@app.route("/auth", methods=['POST'])
-def authenticate():
-    inputtedUser = request.form['username']
-    inputtedPass = request.form['password']
-    inputtedTask = request.form['task']
-
-    if inputtedTask == "register":
-
-        accountInfo = csv.reader(open("data/info.csv"))
-        for i in accountInfo:
-            if inputtedUser == i[0]:
-                return render_template("fail.html",
-                                       title = "Failed Login", 
-                                       text = "This username is already registered!")
-
-        hashPass = hashlib.sha1()
-        hashPass.update(inputtedPass)
-        newInfo = inputtedUser + "," + hashPass.hexdigest()
-        newLine = open("data/info.csv","a")
-        newLine.write(newInfo)
-        newLine.close
-
-        return render_template("success.html",
-                               title = "Account Creation Successful",
-                               text = "A new account has been created for the user: " + inputtedUser)
-
-    if inputtedTask == "login":
-        accountInfo = csv.reader(open("data/info.csv"))
-        for i in accountInfo:
-            if inputtedUser == i[0]:
-                hashPass = hashlib.sha1()
-                hashPass.update(inputtedPass)
-                if i[1] == hashPass.hexdigest():
-                    return render_template("success.html", 
-                                           title = "Welcome to the Promise Land",
-                                           text = "You have logged in successfully. Welcome: " + inputtedUser)
-                else:
-                    return render_template("fail.html",
-                                           title = "Failed Login",
-                                           text = "Your username or password were incorrect")
-    
-if __name__ == "__main__": #false if this file imported as module
-    #enable debugging, auto-restarting of server when this file is modified
-    app.debug = True 
+if __name__ == "__main__" :
+    app.debug = True
     app.run()

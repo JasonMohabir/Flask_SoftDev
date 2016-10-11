@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title> LOGIN PAGE </title>
-  </head>
+<head>
+  <title> Login </title>
+</head>
 
-  
-  <body style="background-color:#ccddff">
-    <form action="/auth" method="POST">
-      <center>
-	<font size="12"> Login </font>
-	<br>
-	<br>
-	Username: 
-	<input type="text" name="username">
-	<br>
-	<br>
-	Password: 
-	<input type="password" name="password">
-	<br>
-	<br>
-	<input type="submit" value="Submit">
-	<br>
-	<br>
-	<b> {{ message }} </b>
-	<br>
-	<br>
-      </center>
-    </form>
-    <center>
-      <button onclick="location.href='/'"> Back to Home </button>
-    </center>
-  </body>
+<body>
+  <br>
+  <center>
+  <form action="/authL" method="POST">
+    Username:
+    <input type="text" name="username">
+    <br>
+    Password:
+    <input type="text" name="password">
+    <br> <br>
+    <input type="submit" name="submit">
+  </form>
+  <br> <br>
+  New member?
+  <form action="/register" method="POST">
+    <input type="submit" name="submit2" value="Create an account">
+  </form>
+  <br> <br>
+  {{message}}
+  </center>
+</body>
 
 </html>
-Contact GitHub API Training Shop Blog About
+
